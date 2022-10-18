@@ -15,9 +15,24 @@ class Survey extends Seeder
     public function run()
     {
         $data = [
-            ['ratingName'=>'Apakah materi yang disampaikan sesuai dengan RPS', 'value'=>'5',"created_at" =>  \Carbon\Carbon::now(),"updated_at" => \Carbon\Carbon::now()],
-            ['ratingName'=>'Cara dosen menyampaikan materi menarik/tidak', 'value'=>'5',"created_at" =>  \Carbon\Carbon::now(),"updated_at" => \Carbon\Carbon::now()],
-            ['ratingName'=>'Apakah bahan ajar menarik (video dan PPT)', 'value'=>'5',"created_at" =>  \Carbon\Carbon::now(),"updated_at" => \Carbon\Carbon::now()],
+            [
+                'categoryId' => 1,
+                'name' => 'Apakah materi yang disampaikan sesuai dengan RPS',
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now()
+            ],
+            [
+                'categoryId' => 1,
+                'name' => 'Cara dosen menyampaikan materi menarik/tidak',
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now()
+            ],
+            [
+                'categoryId' => 1,
+                'name' => 'Apakah bahan ajar menarik (video dan PPT)',
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now()
+            ],
         ];
 
         ModelsSurvey::insert($data);
