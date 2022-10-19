@@ -56,47 +56,8 @@
                       <div class="card-footer bg-transparent">
                         @if(!$enrolItem->surveyid)
                         <div class="text-end">
-                          <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" onclick="change('{{$enrolItem->EnrollID}}')">Beri Survey / Tanggapan</a>
-                        </div>
-
-                        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Beri Survey atau Tanggapan</strong></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <form method="post">
-                                @csrf
-                                <div class="modal-body">
-                                  <div class="mb-3">
-                                    @foreach($survey as $key => $surveyitem)
-                                      <div class="mb-2">
-                                        <strong class="d-block">{{$surveyitem->name}}</strong>
-                                        @foreach($surveyitem->surveys as $key2 => $surveysubitem)
-                                          <span>{{$key2+1}} {{$surveysubitem->name}}</span>
-                                          
-                                          <input type="hidden" name="enrollid" value="" readonly>
-                                          <input type="hidden" name="surveyid" value="{{$surveysubitem->id}}" readonly>
-                                          @foreach(json_decode($surveyitem->options) as $options)
-                                            <div class="form-check" style="margin-left: 10px;">
-                                              <input class="form-check-input" type="radio" name="radio{{$surveysubitem->id}}" id="radio{{$surveysubitem->id}}{{$options->value}}" value="{{$options->value}}">
-                                              <label class="form-check-label" for="radio{{$surveysubitem->id}}{{$options->value}}">
-                                                {{$options->item}}
-                                              </label>
-                                            </div>
-                                          @endforeach
-                                        @endforeach
-                                      </div>
-                                    @endforeach
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="submit" class="form-control btn btn-primary btn-block mb-4">Simpan</button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
+                          <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button" onclick="change('{{$enrolItem->EnrollID}}')"
+                          >Beri Survey / Tanggapan</a>
                         </div>
                         @endif
                       </div>
@@ -107,6 +68,46 @@
           </div>
         </div>
       @endforeach
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Beri Survey atau Tanggapan</strong></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post">
+          @csrf
+          <div class="modal-body">
+            <div class="mb-3">
+              @foreach($survey as $key => $surveyitem)
+                <div class="mb-2">
+                  <strong class="d-block">{{$surveyitem->name}}</strong>
+                  @foreach($surveyitem->surveys as $key2 => $surveysubitem)
+                    <span>{{$key2+1}} {{$surveysubitem->name}}</span>
+                    
+                    <input type="hidden" name="enrollid" value="" readonly>
+                    <input type="hidden" name="surveyid" value="{{$surveysubitem->id}}" readonly>
+                    @foreach(json_decode($surveyitem->options) as $options)
+                      <div class="form-check" style="margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="radio{{$surveysubitem->id}}" id="radio{{$surveysubitem->id}}{{$options->value}}" value="{{$options->value}}">
+                        <label class="form-check-label" for="radio{{$surveysubitem->id}}{{$options->value}}">
+                          {{$options->item}}
+                        </label>
+                      </div>
+                    @endforeach
+                  @endforeach
+                </div>
+              @endforeach
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="form-control btn btn-primary btn-block mb-4">Simpan</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 @stop
