@@ -13,7 +13,7 @@ class Enroll extends Controller
 {
     public function index(Request $request){
         $userid = $request->session()->get('id') ? $request->session()->get('id') : 0;
-        $enrol = ViewEnrollOfStudent::where('userid', $userid)->get(); 
+        $enrol = ViewEnrollOfStudent::select('EnrollID','Semester','Desk','SubjectsCode','ClassCode','SCU','LectureName','surveyid')->where('userid', $userid)->distinct()->get(); 
 
         $semester = [];
         foreach ($enrol as $key => $item) {
