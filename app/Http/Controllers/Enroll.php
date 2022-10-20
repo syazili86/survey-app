@@ -6,12 +6,23 @@ use App\Models\EnrollOfStudent;
 use App\Models\Survey;
 use App\Models\SurveyCategory;
 use App\Models\SurveyEnrol;
+use App\Models\SurveySession;
 use App\Models\ViewEnrollOfStudent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class Enroll extends Controller
 {
     public function index(Request $request){
+        $request->session()->remove('flashMsg');
+
+        $session = SurveySession::where('active', true)->where('start', '<', Carbon::now())->where('end', '>', Carbon::now())->first();
+
+        if ($session == null) {
+            $request->session()->put('flashMsg', "Sesi survey belum dibuka, silahkan hubungi pihak yang bersangkutan untuk jadwal");
+            return view('enrol/lists', ['semester' =>[], 'enrol' => [], 'survey'=>[], 'session' => $session]);
+        }
+
         $userid = $request->session()->get('id') ? $request->session()->get('id') : 0;
         $enrol = ViewEnrollOfStudent::select('EnrollID','Semester','Desk','SubjectsCode','ClassCode','SCU','LectureName','surveyid')->where('userid', $userid)->distinct()->get(); 
 
@@ -24,15 +35,20 @@ class Enroll extends Controller
 
         $survey = SurveyCategory::with('Surveys')->get();
 
-        return view('enrol/lists', ['semester' => $semester, 'enrol' => $enrol, 'survey'=>$survey]);
+        return view('enrol/lists', ['semester' => $semester, 'enrol' => $enrol, 'survey'=>$survey, 'session' => $session]);
     }
 
     public function doSurvey(Request $request){
         $this->validate($request,[
+            'sessionid' => 'required|numeric',
             'enrollid' => 'required|numeric'
         ]);
-
         $request->session()->remove('flashMsg');
+
+        $session = SurveySession::where('id', $request->sessionid)->first();
+        if ($session == null) {
+            $request->session()->put('flashMsg', "Sesi survey belum dibuka, silahkan hubungi pihak yang bersangkutan untuk jadwal");
+        }
 
         $sc = SurveyCategory::with('Surveys')->get();
         
@@ -65,12 +81,13 @@ class Enroll extends Controller
         foreach($sc as $category){
             foreach($category->surveys as $s){
                 $data = [
+                    'SessionID' => $request->sessionid,
                     'EnrollID' => $enrol->EnrollID,
                     'surveyid' => $s->id,
                     'value' => $request['radio'.$s->id]
                 ];
 
-                $surveyEnrol = SurveyEnrol::where('EnrollID', $enrol->EnrollID)->where('surveyid', $s->id)->first();
+                $surveyEnrol = SurveyEnrol::where('SessionID', $request->sessionid)->where('EnrollID', $enrol->EnrollID)->where('surveyid', $s->id)->first();
 
                 if ($surveyEnrol == null) {
                     $surveyEnrol = new SurveyEnrol($data);

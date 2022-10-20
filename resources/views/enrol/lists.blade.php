@@ -88,6 +88,7 @@
                   @foreach($surveyitem->surveys as $key2 => $surveysubitem)
                     <span>{{$key2+1}} {{$surveysubitem->name}}</span>
                     
+                    <input type="hidden" name="sessionid" value="{{$session->id}}" readonly>
                     <input type="hidden" name="enrollid" value="" readonly>
                     <input type="hidden" name="surveyid" value="{{$surveysubitem->id}}" readonly>
                     @foreach(json_decode($surveyitem->options) as $options)

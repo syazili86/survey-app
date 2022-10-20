@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SurveyEnrol extends Model
 {
     use HasFactory;
-    protected $fillable = ['EnrollID','surveyid','value'];
+    protected $fillable = ['SessionID','EnrollID','surveyid','value'];
 }
