@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-outline mb-4">
-                <label class="form-label" for="password">Password</label>
+                <label class="form-label" for="password">Password (gunakan password sisfo)</label>
                 <input type="password" id="password" name="password" class="form-control" />
                 @if ($errors->has('password'))
                 <span class="text-danger">{{ $errors->first('password') }}</span>
