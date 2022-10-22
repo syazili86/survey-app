@@ -11,4 +11,8 @@ class ViewEnrollOfStudent extends Model
 
     protected $table = 'ListOfStudentEnrollSchedule';
     public $timestamps = false;
+
+    public function StudentStatus(){
+        return $this->belongsTo(StudentStatus::class, 'AcademicYearId', 'AcademicYearID');
+    }
 }

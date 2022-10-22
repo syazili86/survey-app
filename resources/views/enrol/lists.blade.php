@@ -23,7 +23,7 @@
       @endforeach
     </ul>
     <div class="tab-content" id="myTabContent">   
-      @foreach ($semester as $key => $item) 
+      @forelse ($semester as $key => $item) 
         <div class="tab-pane fade {{$key == 0 ? 'show active': ''}}" id="tab{{$item}}" role="tabpanel" aria-labelledby="nav-tab{{$item}}">
           
           <div class="row" style="margin: unset !important;">
@@ -67,8 +67,14 @@
             @endforeach
           </div>
         </div>
-      @endforeach
+      @empty
+        <div class="alert alert-info" role="alert">
+          Data enrol tidak ditemukan
+        </div>
+      @endforelse
     </div>
+
+    
   </div>
 
   <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">

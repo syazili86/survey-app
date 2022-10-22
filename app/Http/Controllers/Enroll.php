@@ -10,6 +10,7 @@ use App\Models\SurveySession;
 use App\Models\ViewEnrollOfStudent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Enroll extends Controller
 {
@@ -23,8 +24,26 @@ class Enroll extends Controller
             return view('enrol/lists', ['semester' =>[], 'enrol' => [], 'survey'=>[], 'session' => $session]);
         }
 
+        // $ac = AcademicYearID::where('FlagActive', true)->first();
+        // dd($ac);
+
+        // DB::enableQueryLog();
+        // dd(DB::getQueryLog());
+
         $userid = $request->session()->get('id') ? $request->session()->get('id') : 0;
-        $enrol = ViewEnrollOfStudent::select('EnrollID','Semester','Desk','SubjectsCode','ClassCode','SCU','LectureName','surveyid')->where('userid', $userid)->distinct()->get(); 
+        $enrol = ViewEnrollOfStudent::
+            select('EnrollID','Semester','Desk','SubjectsCode','ClassCode','SCU','LectureName','surveyid')
+            // ->whereHas('AcademicYearID', function($q){
+            //     $q->where('FlagActive',true);
+            // })
+            ->whereHas('StudentStatus', function($q){
+                $q->whereHas('AcademicYearID', function($q2){
+                    $q2->where('FlagActive',true);
+                });
+            })
+            ->where('userid', $userid)
+            ->distinct()
+        ->get(); 
 
         $semester = [];
         foreach ($enrol as $key => $item) {
