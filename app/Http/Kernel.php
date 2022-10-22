@@ -45,8 +45,12 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'CustomAuth' => [
-            \App\Http\Middleware\CustomAuth::class
+        'StudentAuth' => [
+            \App\Http\Middleware\StudentAuth::class
+        ],
+
+        'AdminAuth' => [
+            \App\Http\Middleware\AdminAuth::class
         ]
     ];
 

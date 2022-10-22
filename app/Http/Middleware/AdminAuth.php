@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CustomAuth
+class AdminAuth
 {
+    private $admins = [41];
     /**
      * Handle an incoming request.
      *
@@ -16,7 +17,7 @@ class CustomAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->has('id')){
+        if(!session()->has('id') || !in_array(session()->get('uac'),$this->admins)){
             return redirect('/');
         }
         return $next($request);

@@ -17,7 +17,7 @@ class LoginController extends Controller{
       'password' => 'required'
     ]);
 
-    $data = User::where('usercode', $request->nim)->where('UserCatogoriesID', 1)->first();
+    $data = User::where('usercode', $request->nim)->first();
 
     if(!isset($data->UserPassword) || md5($request->password) !== $data->UserPassword){
       return view('login', ['error'=>'Data tidak ditemukan']);
@@ -25,6 +25,7 @@ class LoginController extends Controller{
 
     $request->session()->regenerate();
     $request->session()->put('id', $data->Userid);
+    $request->session()->put('uac', $data->UserCatogoriesID);
     $request->session()->put('fullname', $data->UseridFirstName." ".$data->LastName);
 
     return redirect('/enrol');
