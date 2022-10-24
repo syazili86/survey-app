@@ -7,7 +7,7 @@
       <div class="card-body">
         <div class="card-title"><h5>Report</h5></div>
 
-        <div class="card-text">
+        <div class="card-text table-responsive">
           <table id="example" class="table table-sm table-striped" width="100%"></table>
           
           

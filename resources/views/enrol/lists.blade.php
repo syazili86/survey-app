@@ -31,7 +31,7 @@
               @if($enrolItem->Semester == $item)
                   <div class="col-sm-3 my-2">
                     <div class="card" style="height: 100%;">
-                      <div class="card-body">
+                      <div class="card-body table-responsive">
                         <h5 class="card-title">{{$enrolItem->Desk}} ({{$enrolItem->SubjectsCode}})</h5>
                         
                         <table width="100%">

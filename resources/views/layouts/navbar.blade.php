@@ -19,6 +19,16 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url('/report')}}">Report</a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Management
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="nav-link" href="{{url('/survey/session')}}">Session</a></li>
+            <li><a class="nav-link" href="{{url('/survey/questions')}}">Questions</a></li>
+          </ul>
+        </li>
+        
         <!-- <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url('/enrol')}}">Enrol</a>
         </li> -->

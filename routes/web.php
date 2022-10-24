@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Enroll;
 use App\Http\Controllers\Report;
+use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\SurveySessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +34,7 @@ Route::group(['middleware'=>['StudentAuth']], function(){
 Route::group(['middleware'=>['AdminAuth']], function(){
   Route::get('/report', [Report::class, 'index']);
   Route::get('/report/{id}/detail', [Report::class, 'detail']);
+
+  Route::get('/survey/questions', [SurveyController::class, 'index']);
+  Route::get('/survey/session', [SurveySessionController::class, 'index']);
 });
