@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\AdminAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,11 @@ class LoginController extends Controller{
     $request->session()->put('uac', $data->UserCatogoriesID);
     $request->session()->put('fullname', $data->UseridFirstName." ".$data->LastName);
 
+    $admins = new Admin();
+    if(in_array($data->UserCatogoriesID,$admins->getAdmins())){
+      return redirect('/report');
+    }
+
     return redirect('/enrol');
   }
 
@@ -35,5 +41,11 @@ class LoginController extends Controller{
       request()->session()->invalidate();
       request()->session()->regenerateToken();
       return redirect('/');
+  }
+}
+
+class Admin extends AdminAuth{
+  public function getAdmins(){
+      return $this->admins;
   }
 }

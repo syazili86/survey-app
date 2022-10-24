@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AdminAuth
 {
-    private $admins = [41];
+    protected $admins = [41];
     /**
      * Handle an incoming request.
      *
