@@ -17,7 +17,7 @@ class Enroll extends Controller
     public function index(Request $request){
         $request->session()->remove('flashMsg');
 
-        $session = SurveySession::where('active', true)->where('start', '<', Carbon::now())->first();
+        $session = SurveySession::where('active', true)->first();
 
         if ($session == null) {
             $request->session()->put('flashMsg', "Sesi survey belum dibuka, silahkan hubungi pihak yang bersangkutan untuk jadwal");
