@@ -17,7 +17,7 @@ class Enroll extends Controller
     public function index(Request $request){
         $request->session()->remove('flashMsg');
 
-        $session = SurveySession::where('active', true)->where('start', '<', Carbon::now())->where('end', '>', Carbon::now())->first();
+        $session = SurveySession::where('active', true)->where('end', '>', Carbon::now())->first();
 
         if ($session == null) {
             $request->session()->put('flashMsg', "Sesi survey belum dibuka, silahkan hubungi pihak yang bersangkutan untuk jadwal");
@@ -43,7 +43,7 @@ class Enroll extends Controller
             })
             ->where('userid', $userid)
             ->distinct()
-        ->get(); 
+        ->get();
 
         $semester = [];
         foreach ($enrol as $key => $item) {
@@ -70,7 +70,7 @@ class Enroll extends Controller
         }
 
         $sc = SurveyCategory::with('Surveys')->get();
-        
+
         foreach($sc as $cateogry){
             foreach($cateogry->surveys as $s){
                 if(empty($request['radio'.$s->id])){
